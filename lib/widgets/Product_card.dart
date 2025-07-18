@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_realestate_shopping_app/pages/Product_Detail_Page.dart';
 import '../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
@@ -7,60 +6,42 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({super.key, required this.product});
 
-  String formatPrice(int price) {
-    if (price == 0) return '사기입니다.';
-    return price.toString().replaceAllMapped(
-          RegExp(r'\B(?=(\d{3})+(?!\d))'),
-          (match) => ',',
-        ) +
-        ' 원';
-  }
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetailPage(product: product),
-          ),
-        );
-      },
-      child: Container(
-        height: 200,
-        margin: const EdgeInsets.only(bottom: 16),
+    return Card(
+      color: Colors.grey[300],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          border: const Border(bottom: BorderSide(color: Colors.grey)),
-          color: Colors.white,
-        ),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
+            // 텍스트 이미지로 대체
+            Container(
+              width: 60,
+              height: 60,
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: Text(
                 product.imagePath,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     product.name,
                     style: const TextStyle(
-                      fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
-                  Text('유형: ${product.type}'),
-                  Text(formatPrice(product.price)),
+                  const SizedBox(height: 4),
+                  Text('종류: ${product.type}'),
+                  Text('가격: ${product.price}원'),
                 ],
               ),
             ),

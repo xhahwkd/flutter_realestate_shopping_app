@@ -13,8 +13,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
   final typeController = TextEditingController();
   final priceController = TextEditingController();
   final descController = TextEditingController();
-  String? imagePath;
-  bool imageSelected = false;
+  bool imageSelected = false; //
 
   String formatPrice(String price) {
     if (price.isEmpty) return '';
@@ -36,7 +35,6 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
             onPressed: () {
               setState(() {
                 imageSelected = true;
-                imagePath = 'assets/house.png';
               });
               Navigator.pop(context);
             },
@@ -48,8 +46,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
   }
 
   void trySubmit() {
-    if (!imageSelected ||
-        nameController.text.isEmpty ||
+    if (nameController.text.isEmpty ||
         typeController.text.isEmpty ||
         priceController.text.isEmpty ||
         descController.text.isEmpty) {
@@ -64,7 +61,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
       type: typeController.text,
       price: int.tryParse(priceController.text.replaceAll(',', '')) ?? 0,
       description: descController.text,
-      imagePath: imagePath!,
+      imagePath: imageSelected ? 'Image 선택됨' : 'Image 선택',
     );
 
     showDialog(
