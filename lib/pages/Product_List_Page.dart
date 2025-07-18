@@ -16,18 +16,7 @@ class ProductListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('매물 목록'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const ProductRegisterPage()),
-            );
-          },
-        ),
-      ),
+      appBar: AppBar(title: const Text('매물 목록')),
       body: productList.isEmpty
           ? const Center(
               child: Text('매물이 존재하지 않습니다.', style: TextStyle(fontSize: 16)),
