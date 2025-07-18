@@ -29,7 +29,14 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        content: const Text('이미지가 선택되었습니다.'),
+        content: const Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: Text(
+            '이미지가 선택되었습니다.',
+            textAlign: TextAlign.center, //텍스트 중앙 정렬
+          ),
+        ),
+        actionsAlignment: MainAxisAlignment.center, //버튼 중앙 정렬
         actions: [
           TextButton(
             onPressed: () {
