@@ -18,18 +18,27 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('상품상세페이지')),
+
+      // 본문 영역
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 200,
-              child: Image.asset(product.imagePath, fit: BoxFit.cover),
+            // 상품등록페이지 이미지 대신 텍스트 박스 가져옴
+            Container(
+              height: 210,
+              alignment: Alignment.center,
+              color: Colors.grey[300],
+              child: Text(
+                product.imagePath,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
             const SizedBox(height: 20),
+            // 상품정보
             Container(
-              height: 300,
+              height: 400,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -39,7 +48,7 @@ class ProductDetailPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('거래 유형: ${product.type}'),
+                    Text('매물 종류: ${product.type}'),
                     const SizedBox(height: 8),
                     Text(
                       '상품명: ${product.name}',
@@ -56,62 +65,77 @@ class ProductDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          content: Text('${product.name}을 구매하시겠습니까?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('취소'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    content: const Text('구매 완료'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: const Text('확인'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              child: const Text('확인'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+          ],
+        ),
+      ),
+
+      // 하단 구매 + 하트 버튼 영역
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        child: Row(
+          children: [
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        content: Text('${product.name} 구매하시겠습니까?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: const Text('구매 완료'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('확인'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: const Text('확인'),
+                          ),
+                        ],
                       ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      '구매하기',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                  ),
+                  child: const Text(
+                    '구매하기',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                const Text('❤️', style: TextStyle(fontSize: 28)),
-              ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            GestureDetector(
+              onTap: () {
+                // 추후 찜 페이지로 이동
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(const SnackBar(content: Text('찜 목록으로 이동할 예정')));
+              },
+              child: const Text('❤️', style: TextStyle(fontSize: 28)),
             ),
           ],
         ),
