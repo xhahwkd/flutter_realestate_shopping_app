@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realestate_shopping_app/like_list/like_list_page.dart';
 import '../models/product_model.dart';
 
 class ProductDetailPage extends StatelessWidget {
@@ -130,10 +131,10 @@ class ProductDetailPage extends StatelessWidget {
             const SizedBox(width: 8),
             GestureDetector(
               onTap: () {
-                // 추후 찜 페이지로 이동
-                ScaffoldMessenger.of(
+                Navigator.push(
                   context,
-                ).showSnackBar(const SnackBar(content: Text('찜 목록으로 이동할 예정')));
+                  MaterialPageRoute(builder: (context) => LikeListPage()),
+                );
               },
               child: const Text('❤️', style: TextStyle(fontSize: 28)),
             ),

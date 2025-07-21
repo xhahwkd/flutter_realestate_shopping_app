@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_realestate_shopping_app/red_button.dart';
+import 'package:flutter_realestate_shopping_app/product_page/product_list_page.dart';
+import 'package:flutter_realestate_shopping_app/widgets/red_button.dart';
 import 'package:flutter_realestate_shopping_app/filtering/widget/category_dropdown.dart';
-import 'package:flutter_realestate_shopping_app/product_list/product_list_page.dart';
 
 class FilteringPage extends StatelessWidget {
-  get center => null;
-  late String price;
-  late String productCategory;
+  final String price;
+  final String productCategory;
+  const FilteringPage({Key? key, this.price = '', this.productCategory = ''})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class FilteringPage extends StatelessWidget {
                 "10억 이상",
               ],
               onCategorySelected: (category) {
-                price = category;
+                // price = category; // final로 변경되어 할당 불가, 실제 필터링 로직 필요시 상태관리 필요
               },
               filteringCategory: "가격",
             ),
@@ -35,7 +36,7 @@ class FilteringPage extends StatelessWidget {
             CategoryDropdown(
               categories: ["전체", "아파트", "빌라", "오피스텔"],
               onCategorySelected: (category) {
-                productCategory = category;
+                // productCategory = category; // final로 변경되어 할당 불가, 실제 필터링 로직 필요시 상태관리 필요
               },
               filteringCategory: "매물 유형",
             ),

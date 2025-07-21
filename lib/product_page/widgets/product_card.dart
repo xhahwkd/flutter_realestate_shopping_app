@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realestate_shopping_app/product_page/product_detail_page.dart';
 import 'package:intl/intl.dart'; //숫자 포맷 패키지
-import 'package:flutter_realestate_shopping_app/pages/Product_Detail_Page.dart';
-import '../models/product_model.dart';
+import '../../models/product_model.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
