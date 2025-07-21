@@ -23,7 +23,9 @@ class HomePage extends StatelessWidget {
               Spacer(),
               Text("로그인 유형을 선택해 주세요.", style: TextStyle(fontSize: 20)),
               SizedBox(height: 50),
+
               GestureDetector(
+                //구매자모드: isSeller: false전달
                 onTap: () {
                   Navigator.push(
                     context,
@@ -33,11 +35,15 @@ class HomePage extends StatelessWidget {
                 child: LoginType(loginType: "구매자", emoji: "🧑‍💻"),
               ),
               SizedBox(height: 40),
+
               GestureDetector(
+                //판매자모드: isSeller: true전달
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProductListPage()),
+                    MaterialPageRoute(
+                      builder: (context) => ProductListPage(isSeller: true),
+                    ),
                   );
                 },
                 child: LoginType(loginType: "판매자", emoji: "💰"),

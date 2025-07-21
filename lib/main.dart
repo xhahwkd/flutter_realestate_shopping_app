@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'product_page/product_list_page.dart';
 import 'models/product_model.dart';
 import 'package:flutter_realestate_shopping_app/home/home_page.dart';
 
+List<Product> globalProductList = []; //전역 리스트
 void main() {
   runApp(const MyApp());
 }
