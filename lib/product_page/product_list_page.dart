@@ -5,9 +5,14 @@ import 'package:flutter_realestate_shopping_app/product_page/widgets/product_car
 import '../models/product_model.dart';
 
 class ProductListPage extends StatefulWidget {
-  final List<Product>? productList; // 필터링된 리스트를 받을 수 있도록 nullable 파라미터 추가
+  final List<Product>? productList;
+  final bool isSeller; //판매자인지 여부 추가
 
-  const ProductListPage({super.key, this.productList}); // 생성자에 productList 추가
+  const ProductListPage({
+    super.key,
+    this.productList,
+    this.isSeller = false, //기본값은 구매자(false)
+  });
 
   @override
   State<ProductListPage> createState() => _ProductListPageState();
@@ -35,18 +40,24 @@ class _ProductListPageState extends State<ProductListPage> {
                 return ProductCard(product: globalProductList[index]);
               },
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newProduct = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ProductRegisterPage()),
-          );
-          if (newProduct != null && newProduct is Product) {
-            _addProduct(newProduct);
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton:
+          widget
+              .isSeller //판매자일 때만 버튼 보이게
+          ? FloatingActionButton(
+              onPressed: () async {
+                final newProduct = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProductRegisterPage(),
+                  ),
+                );
+                if (newProduct != null && newProduct is Product) {
+                  _addProduct(newProduct);
+                }
+              },
+              child: const Icon(Icons.add),
+            )
+          : null, //구매자는 버튼 없음
     );
   }
 }
