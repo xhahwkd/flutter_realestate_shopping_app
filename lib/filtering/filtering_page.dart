@@ -3,6 +3,7 @@ import 'package:flutter_realestate_shopping_app/main.dart';
 import 'package:flutter_realestate_shopping_app/models/product_model.dart';
 import 'package:flutter_realestate_shopping_app/product_page/product_list_page.dart';
 import 'package:flutter_realestate_shopping_app/filtering/widget/category_dropdown.dart';
+import 'package:flutter_realestate_shopping_app/widgets/red_button.dart';
 
 class FilteringPage extends StatefulWidget {
   final String price;
@@ -83,28 +84,9 @@ class _FilteringPageState extends State<FilteringPage> {
               filteringCategory: "매물 유형",
             ),
             const Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                minimumSize: const Size(200, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              onPressed: () {
-                final filteredList = getFilteredList(); //필터링된 리스트 추출
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) =>
-                        ProductListPage(productList: filteredList), //전달
-                  ),
-                );
-              },
-              child: const Text(
-                "검색하기",
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
+            RedButton(
+              title: "검색하기",
+              landingPage: ProductListPage(productList: getFilteredList()),
             ),
             const Spacer(),
           ],
