@@ -1,16 +1,46 @@
-# flutter_realestate_shopping_app
+<h1 align="center">
+임박세일 홈즈 🏠
+</h1>
+<p align="center">
+</p>
+</p>
 
-A new Flutter project.
+## 프로젝트 개요
+### "임박세일 홈즈"는 부동산 급매 매물을 실시간으로 연결하는 매물 중심 쇼핑 플랫폼입니다.
+#### 이런 분들을 위해 만들었습니다.
 
-## Getting Started
+> 매물을 빠르게 팔고 싶은 집주인
+> 
 
-This project is a starting point for a Flutter application.
+> 좋은 조건의 급매를 찾는 실수요자
+> 
 
-A few resources to get you started if this is your first Flutter project:
+> 투자 타이밍을 노리는 현명한 투자자
+> 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<br/>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 팀원 구성
+### 팀명: 성공임박
+
+**박혜진** : 홈화면I/II, 찜목록페이지, 테마, 페이지연결
+**임혜진** : 상품등록페이지, 상품상세페이지, 상품목록페이지, 상품필터기능
+
+<br/>
+
+## 프로젝트 일정
+25/07/17 ~ 25/07/23
+
+<br/>
+
+## 앱 UI Flow
+
+<br/>
+
+## 앱 주요기능
+**홈화면I** :
+**홈화면II** :
+**상품등록페이지** :
+**매물목록** :
+**상품상세페이지** :
+**찜목록페이지** :
