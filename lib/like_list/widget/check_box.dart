@@ -17,7 +17,7 @@ class _MyCheckboxState extends State<MyCheckbox> {
           isChecked = value ?? false;
         });
       },
-      activeColor: Colors.red, // 체크됐을 때 색상
+      activeColor: Color.fromRGBO(191, 49, 49, 1.0), // 체크됐을 때 색상
     );
   }
 }

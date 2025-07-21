@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_realestate_shopping_app/like_list/like_list_page.dart';
 import 'package:flutter_realestate_shopping_app/main.dart';
 import 'package:flutter_realestate_shopping_app/product_page/product_register_page.dart';
 import 'package:flutter_realestate_shopping_app/product_page/widgets/product_card.dart';
@@ -44,6 +45,41 @@ class _ProductListPageState extends State<ProductListPage> {
                 return ProductCard(product: displayList[index]);
               },
             ),
+// feature/likelist
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 하트 버튼 (위)
+          FloatingActionButton(
+            heroTag: "likeFab",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => LikeListPage()),
+              );
+            },
+            backgroundColor: Colors.white,
+            child: const Icon(Icons.favorite, color: Colors.red),
+          ),
+          const SizedBox(height: 16), // 버튼 사이 간격
+          // + 버튼 (아래)
+          /*
+          FloatingActionButton(
+            heroTag: "addFab",
+            onPressed: () async {
+              final newProduct = await Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ProductRegisterPage()),
+              );
+              if (newProduct != null && newProduct is Product) {
+                _addProduct(newProduct);
+              }
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
+      ),*/
+//임혜진님
       floatingActionButton:
           widget
               .isSeller //판매자일 때만 + 버튼 표시
@@ -62,6 +98,7 @@ class _ProductListPageState extends State<ProductListPage> {
               child: const Icon(Icons.add),
             )
           : null, //구매자는 + 버튼 없음
+//
     );
   }
 }

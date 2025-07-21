@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_realestate_shopping_app/like_list/like_list_page.dart';
 import '../models/product_model.dart';
+import 'package:get/get.dart';
+import '../models/like_controller.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final Product product;
@@ -17,6 +19,8 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LikeController likeController = Get.find<LikeController>();
+
     return Scaffold(
       appBar: AppBar(title: const Text('상품상세페이지')),
 
@@ -129,15 +133,18 @@ class ProductDetailPage extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LikeListPage()),
-                );
-              },
-              child: const Text('❤️', style: TextStyle(fontSize: 28)),
-            ),
+            Obx(() {
+              final isLiked = likeController.isLiked(product);
+              return GestureDetector(
+                onTap: () {
+                  likeController.toggleLike(product);
+                },
+                child: Text(
+                  isLiked ? '❤️' : '🤍',
+                  style: const TextStyle(fontSize: 28),
+                ),
+              );
+            }),
           ],
         ),
       ),
