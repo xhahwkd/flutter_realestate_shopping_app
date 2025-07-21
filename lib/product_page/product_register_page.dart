@@ -83,6 +83,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); //첫 번째 팝업 닫기
+
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(

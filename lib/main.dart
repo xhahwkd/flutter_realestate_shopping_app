@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'models/like_controller.dart';
+import 'models/product_model.dart';
 import 'package:flutter_realestate_shopping_app/home/home_page.dart';
 
+List<Product> globalProductList = []; //전역 리스트
 void main() {
   Get.put(LikeController());
   runApp(const MyApp());
