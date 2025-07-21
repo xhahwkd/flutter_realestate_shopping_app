@@ -45,11 +45,10 @@ class _ProductListPageState extends State<ProductListPage> {
                 return ProductCard(product: displayList[index]);
               },
             ),
-// feature/likelist
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 하트 버튼 (위)
+          // 하트 버튼 (항상 표시)
           FloatingActionButton(
             heroTag: "likeFab",
             onPressed: () {
@@ -61,29 +60,11 @@ class _ProductListPageState extends State<ProductListPage> {
             backgroundColor: Colors.white,
             child: const Icon(Icons.favorite, color: Colors.red),
           ),
-          const SizedBox(height: 16), // 버튼 사이 간격
-          // + 버튼 (아래)
-          /*
-          FloatingActionButton(
-            heroTag: "addFab",
-            onPressed: () async {
-              final newProduct = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ProductRegisterPage()),
-              );
-              if (newProduct != null && newProduct is Product) {
-                _addProduct(newProduct);
-              }
-            },
-            child: const Icon(Icons.add),
-          ),
-        ],
-      ),*/
-//임혜진님
-      floatingActionButton:
-          widget
-              .isSeller //판매자일 때만 + 버튼 표시
-          ? FloatingActionButton(
+          // 판매자일 때만 + 버튼 표시
+          if (widget.isSeller) ...[
+            const SizedBox(height: 16),
+            FloatingActionButton(
+              heroTag: "addFab",
               onPressed: () async {
                 final newProduct = await Navigator.push(
                   context,
@@ -96,9 +77,10 @@ class _ProductListPageState extends State<ProductListPage> {
                 }
               },
               child: const Icon(Icons.add),
-            )
-          : null, //구매자는 + 버튼 없음
-//
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
