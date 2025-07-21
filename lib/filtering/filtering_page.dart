@@ -86,7 +86,10 @@ class _FilteringPageState extends State<FilteringPage> {
             const Spacer(),
             RedButton(
               title: "검색하기",
-              landingPage: ProductListPage(productList: getFilteredList()),
+              landingPage: ProductListPage(
+                isSeller: false, // 구매자이므로 seller 모드 off
+                productList: getFilteredList(),
+              ), //필터링된 리스트 전달
             ),
             const Spacer(),
           ],
