@@ -20,10 +20,13 @@ class LikeItemBox extends StatelessWidget {
         child: Row(
           children: [
             Obx(
-              () => Checkbox(
-                value: likeController.checkedMap[product] ?? false,
-                onChanged: (_) {
-                  likeController.toggleCheck(product);
+              () => Radio<Product?>(
+                value: product,
+                groupValue: likeController.selectedProduct.value,
+                onChanged: (Product? value) {
+                  if (value != null) {
+                    likeController.selectProduct(value);
+                  }
                 },
               ),
             ),

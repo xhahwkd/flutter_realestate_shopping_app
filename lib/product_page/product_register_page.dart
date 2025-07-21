@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
 
@@ -52,65 +53,10 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
     );
   }
 
-  void trySubmit() {
-    if (nameController.text.isEmpty ||
-        typeController.text.isEmpty ||
-        priceController.text.isEmpty ||
-        descController.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('모든 항목을 입력해 주세요.')));
-      return;
-    }
-
-    final product = Product(
-      name: nameController.text,
-      type: typeController.text,
-      price: int.tryParse(priceController.text.replaceAll(',', '')) ?? 0,
-      description: descController.text,
-      imagePath: imageSelected ? 'Image 선택됨' : 'Image 선택',
-    );
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        content: const Text('상품을 등록하시겠습니까?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('취소'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); //첫 번째 팝업 닫기
-
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  content: const Text('상품 등록 완료'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context); //두 번째 팝업 닫기
-                        Navigator.pop(context, product); //매물목록페이지로 이동, 상품 전달
-                      },
-                      child: const Text('확인'),
-                    ),
-                  ],
-                ),
-              );
-            },
-            child: const Text('확인'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('상품등록페이지')),
+      appBar: AppBar(title: const Text('상품 등록페이지')),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
@@ -198,25 +144,92 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
       //등록하기 버튼 bottomNavigationBar에 고정
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(20),
-        child: SizedBox(
-          height: 50, //등록하기 버튼 높이
-          child: ElevatedButton(
-            onPressed: trySubmit,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(191, 49, 49, 1.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: const Text(
-              '등록하기',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
+            elevation: 5,
+            shadowColor: Colors.black,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          ),
+          child: const Text(
+            '등록하기',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
+          onPressed: () {
+            // 1. 먼저 모든 필드가 채워졌는지 확인합니다.
+            if (nameController.text.isEmpty ||
+                typeController.text.isEmpty ||
+                priceController.text.isEmpty ||
+                descController.text.isEmpty) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('모든 항목을 입력해 주세요.')));
+              return; // 비어있으면 여기서 중단
+            }
+
+            // 2. 모든 필드가 채워졌으면 "등록 확인" 팝업을 띄웁니다.
+            showDialog(
+              context: context,
+              builder: (dialogContext) => CupertinoAlertDialog(
+                title: const Text("등록 확인"),
+                content: const Text("이대로 등록하시겠습니까?"),
+                actions: [
+                  CupertinoDialogAction(
+                    child: const Text("취소"),
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                  ),
+                  CupertinoDialogAction(
+                    child: const Text("등록"),
+                    isDefaultAction: true,
+                    onPressed: () {
+                      Navigator.of(dialogContext).pop(); // "등록 확인" 팝업 닫기
+
+                      // 3. 상품 객체를 생성합니다.
+                      final newProduct = Product(
+                        name: nameController.text,
+                        type: typeController.text,
+                        price:
+                            int.tryParse(
+                              priceController.text.replaceAll(',', ''),
+                            ) ??
+                            0,
+                        description: descController.text,
+                        imagePath: imageSelected ? 'Image 선택됨' : 'Image 선택',
+                      );
+
+                      // 4. "등록 완료" 팝업을 띄웁니다.
+                      showDialog(
+                        context: context,
+                        builder: (completionDialogContext) =>
+                            CupertinoAlertDialog(
+                              title: const Text('등록 완료'),
+                              actions: [
+                                CupertinoDialogAction(
+                                  isDefaultAction: true,
+                                  child: const Text('확인'),
+                                  onPressed: () {
+                                    // 5. "등록 완료" 팝업을 닫고,
+                                    Navigator.of(completionDialogContext).pop();
+                                    // 6. 이전 페이지로 상품 정보를 전달하며 돌아갑니다.
+                                    Navigator.of(context).pop(newProduct);
+                                  },
+                                ),
+                              ],
+                            ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

@@ -32,7 +32,7 @@ class RedButton extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

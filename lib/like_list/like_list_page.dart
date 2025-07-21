@@ -11,24 +11,44 @@ class LikeListPage extends StatelessWidget {
   final LikeController likeController = Get.find<LikeController>();
 
   void _showPurchaseDialog(BuildContext context) {
+    final product = likeController.selectedProduct.value;
+    if (product == null) return;
+
     showDialog(
       context: context,
       builder: (context) => CupertinoAlertDialog(
-        title: Text("구매 확인"),
-        content: Text("정말 구매하시겠습니까?"),
+        title: const Text("구매 확인"),
+        content: Text("${product.name}을/를 정말 구매하시겠습니까?"),
         actions: [
           CupertinoDialogAction(
-            child: Text("취소"),
+            child: const Text("취소"),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoDialogAction(
-            child: Text("확인"),
+            child: const Text("확인"),
             isDefaultAction: true,
             onPressed: () {
-              Navigator.of(context).pop(); // 팝업 닫기
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProductListPage()),
+              // 1. "구매 확인" 팝업을 먼저 닫습니다.
+              Navigator.of(context).pop();
+
+              // 2. 그 다음에 "구매 완료" 팝업을 띄웁니다.
+              showDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  title: const Text('구매 완료'),
+                  actions: [
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: const Text('확인'),
+                      onPressed: () {
+                        // "구매 완료" 팝업을 닫고,
+                        Navigator.of(context).pop();
+                        // "찜 목록 페이지"도 닫아 매물 목록으로 돌아갑니다.
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -40,7 +60,7 @@ class LikeListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("찜 목록")),
+      appBar: AppBar(title: const Text("찜 목록")),
       body: Stack(
         children: [
           Column(
@@ -70,20 +90,25 @@ class LikeListPage extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromRGBO(191, 49, 49, 1.0),
+                            backgroundColor: const Color.fromRGBO(
+                              191,
+                              49,
+                              49,
+                              1.0,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
                             elevation: 5,
                             shadowColor: Colors.black,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 32,
                               vertical: 16,
                             ),
                           ),
-                          onPressed: likeController.hasChecked
+                          onPressed: likeController.isProductSelected
                               ? () => _showPurchaseDialog(context)
-                              : null, // 체크 없으면 비활성화
+                              : null,
                           child: const Text(
                             "구매하기",
                             style: TextStyle(
@@ -100,25 +125,23 @@ class LikeListPage extends StatelessWidget {
               ),
             ],
           ),
-          // 오른쪽 하단에 선택한 매물 가격의 총계 계산
+          // 오른쪽 하단에 선택한 매물 가격 표시
           Positioned(
             right: 15,
             bottom: 100, // 구매 버튼 위에 위치
             child: Obx(() {
-              final total = likeController.checkedTotalPrice;
-              return total > 0
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-
-                      child: Text(
-                        "총계: " + _formatPrice(total),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromRGBO(191, 49, 49, 1.0),
+              final price = likeController.selectedProductPrice;
+              return price > 0
+                  ? Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        child: Text(
+                          "가격: " + _formatPrice(price),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(191, 49, 49, 1.0),
+                          ),
                         ),
                       ),
                     )

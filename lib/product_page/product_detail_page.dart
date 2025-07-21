@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_realestate_shopping_app/like_list/like_list_page.dart';
 import '../models/product_model.dart';
@@ -22,7 +23,7 @@ class ProductDetailPage extends StatelessWidget {
     final LikeController likeController = Get.find<LikeController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('상품상세페이지')),
+      appBar: AppBar(title: const Text('상세페이지')),
 
       // 본문 영역
       body: Padding(
@@ -46,7 +47,6 @@ class ProductDetailPage extends StatelessWidget {
               height: 400,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: SingleChildScrollView(
@@ -62,7 +62,9 @@ class ProductDetailPage extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       '가격: ${formatPrice(product.price)}',
-                      style: const TextStyle(color: Colors.red),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(191, 49, 49, 1.0),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(product.description),
@@ -80,59 +82,73 @@ class ProductDetailPage extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: SizedBox(
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        content: Text('${product.name} 구매하시겠습니까?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('취소'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  content: const Text('구매 완료'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Navigator.pop(context),
-                                      child: const Text('확인'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            child: const Text('확인'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) => CupertinoAlertDialog(
+                      title: const Text("구매 확인"),
+                      content: Text("${product.name}을/를 구매하시겠습니까?"),
+                      actions: [
+                        CupertinoDialogAction(
+                          child: const Text("취소"),
+                          onPressed: () => Navigator.of(dialogContext).pop(),
+                        ),
+                        CupertinoDialogAction(
+                          child: const Text("확인"),
+                          isDefaultAction: true,
+                          onPressed: () {
+                            // 확인 버튼 누르면, 먼저 확인창을 닫고,
+                            Navigator.of(dialogContext).pop();
+                            // 그 다음에 구매완료 창을 띄웁니다.
+                            showDialog(
+                              context: context,
+                              builder: (context) => CupertinoAlertDialog(
+                                title: const Text('구매 완료'),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    isDefaultAction: true,
+                                    child: const Text('확인'),
+                                    onPressed: () {
+                                      // 1. "구매 완료" 팝업을 닫습니다.
+                                      Navigator.of(context).pop();
+                                      // 2. "상품 상세 페이지"도 닫습니다. (이렇게 하면 매물 목록으로 돌아갑니다)
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromRGBO(191, 49, 49, 1.0),
+                  disabledBackgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text(
-                    '구매하기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                  elevation: 5,
+                  shadowColor: Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                ),
+                child: const Text(
+                  '구매하기',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 20),
             Obx(() {
               final isLiked = likeController.isLiked(product);
               return GestureDetector(
@@ -141,7 +157,7 @@ class ProductDetailPage extends StatelessWidget {
                 },
                 child: Text(
                   isLiked ? '❤️' : '🤍',
-                  style: const TextStyle(fontSize: 28),
+                  style: const TextStyle(fontSize: 35),
                 ),
               );
             }),

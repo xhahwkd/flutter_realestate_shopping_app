@@ -22,7 +22,7 @@ class ProductCard extends StatelessWidget {
         );
       },
       child: Card(
-        color: Colors.grey[300],
+        color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: Padding(
@@ -31,17 +31,21 @@ class ProductCard extends StatelessWidget {
             children: [
               // 이미지 대체 텍스트 박스
               Container(
-                width: 100,
-                height: 80,
-                color: Colors.white,
+                width: 130,
+                height: 100,
                 alignment: Alignment.center, // 텍스트 가운데 정렬
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: Text(
                   product.imagePath,
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 14),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 30),
+
               // 상품 정보
               Expanded(
                 child: Column(
