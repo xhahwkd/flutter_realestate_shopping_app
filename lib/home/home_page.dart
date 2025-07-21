@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_realestate_shopping_app/filtering/filtering_page.dart';
 import 'package:flutter_realestate_shopping_app/home/widget/login_type.dart';
-import 'package:flutter_realestate_shopping_app/like_list/like_list_page.dart';
+import 'package:flutter_realestate_shopping_app/product_page/product_list_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LikeListPage()),
+                    MaterialPageRoute(builder: (context) => ProductListPage()),
                   );
                 },
                 child: LoginType(loginType: "판매자", emoji: "💰"),

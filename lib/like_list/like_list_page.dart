@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_realestate_shopping_app/like_list/widget/like_item_box.dart';
-import 'package:flutter_realestate_shopping_app/product_list/product_list_page.dart';
+import 'package:flutter_realestate_shopping_app/product_page/product_list_page.dart';
 
 class LikeListPage extends StatelessWidget {
   void _showPurchaseDialog(BuildContext context) {
