@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'product_page/product_list_page.dart';
-import 'models/product_model.dart';
+import 'package:get/get.dart';
+import 'models/like_controller.dart';
 import 'package:flutter_realestate_shopping_app/home/home_page.dart';
 
 void main() {
+  Get.put(LikeController());
   runApp(const MyApp());
 }
 
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
           bodySmall: TextStyle(fontFamily: 'NotoSansKR-Light', fontSize: 20),
         ),
         scaffoldBackgroundColor: Color.fromRGBO(255, 252, 246, 1),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromRGBO(191, 49, 49, 1.0),
+        ),
       ),
       home: HomePage(),
     );
