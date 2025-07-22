@@ -29,7 +29,7 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
   void showImagePicker() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (context) => CupertinoAlertDialog(
         content: const Padding(
           padding: EdgeInsets.only(top: 20),
           child: Text(
@@ -37,7 +37,6 @@ class _ProductRegisterPageState extends State<ProductRegisterPage> {
             textAlign: TextAlign.center, //텍스트 중앙 정렬
           ),
         ),
-        actionsAlignment: MainAxisAlignment.center, //버튼 중앙 정렬
         actions: [
           TextButton(
             onPressed: () {
