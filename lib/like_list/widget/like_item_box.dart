@@ -38,12 +38,18 @@ class LikeItemBox extends StatelessWidget {
               child:
                   product.imagePath.endsWith('.png') ||
                       product.imagePath.endsWith('.jpg')
-                  ? Image.asset(product.imagePath, fit: BoxFit.cover)
+                  ? Image.asset(
+                      product.imagePath,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    )
                   : Text(
                       product.imagePath,
                       style: const TextStyle(fontSize: 12),
+                      textAlign: TextAlign.center,
                     ),
             ),
+
             const SizedBox(width: 16),
             // 매물 상세 정보 표시
             Expanded(
